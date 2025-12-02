@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Konfirmasi Hapus Pengaduan</title>
+</head>
+<body>
+    <h1>Hapus Pengaduan</h1>
+    <p>Apakah Anda **YAKIN** ingin menghapus pengaduan berikut?</p>
+    
+    <p><strong>Judul:</strong> {{ object.judul }}</p>
+    <p><strong>Pelapor:</strong> {{ object.pelapor.nama_lengkap }}</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" style="background-color: red; color: white; padding: 10px;">Ya, Hapus Permanen</button>
+        <a href="{% url 'pengaduan-list' %}" style="margin-left: 15px;">Batal</a>
+    </form>
+</body>
+</html>

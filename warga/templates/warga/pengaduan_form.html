@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if object %}Edit Pengaduan{% else %}Buat Pengaduan Baru{% endif %}</title>
+</head>
+<body>
+    <h1>{% if object %}Edit Pengaduan: {{ object.judul }}{% else %}Form Pengaduan Baru{% endif %}</h1>
+    
+    <form method="post">
+        {% csrf_token %} 
+        
+        {{ form.as_p }} 
+        
+        <button type="submit">Simpan Pengaduan</button>
+    </form>
+    
+    <p><a href="{% url 'pengaduan-list' %}">← Batal dan Kembali</a></p>
+</body>
+</html>

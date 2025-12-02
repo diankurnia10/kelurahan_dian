@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if object %}Edit Data Warga{% else %}Tambah Warga Baru{% endif %}</title>
+</head>
+<body>
+    <h1>{% if object %}Edit Data Warga: {{ object.nama_lengkap }}{% else %}Form Pendaftaran Warga Baru{% endif %}</h1>
+    
+    <form method="post">
+        {% csrf_token %} 
+        
+        {{ form.as_p }} 
+        
+        <button type="submit">Simpan Data</button>
+    </form>
+    
+    <p><a href="{% url 'warga-list' %}">← Batal dan Kembali</a></p>
+</body>
+</html>
