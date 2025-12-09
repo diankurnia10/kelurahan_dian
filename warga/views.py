@@ -8,6 +8,7 @@ from .forms import WargaForm, PengaduanForm # Diperlukan untuk CreateView/Update
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
 from .serializers import WargaSerializer, PengaduanSerializer
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 # --- 1. DJANGO CLASS-BASED VIEWS (CBV) untuk HTML (Pertemuan 1-4) ---
 
@@ -56,16 +57,22 @@ class PengaduanCreateView(CreateView):
 
 # Warga API (CRUD Penuh)
 class WargaViewSet(viewsets.ModelViewSet):
-    """API CRUD lengkap untuk Model Warga."""
     queryset = Warga.objects.all().order_by('-tanggal_registrasi')
     serializer_class = WargaSerializer
-    # Publik bisa baca, tapi harus login untuk ubah/buat (Pertemuan 9)
+    # Publik bisa baca, tapi harus login untuk ubah/buat 
     permission_classes = [IsAuthenticatedOrReadOnly] 
+
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['nama_lengkap', 'nik', 'alamat']
+    ordering_fields = ['nama_lengkap', 'tanggal_registrasi']
 
 # Pengaduan API (CRUD Penuh)
 class PengaduanViewSet(viewsets.ModelViewSet):
-    """API CRUD lengkap untuk Model Pengaduan."""
     queryset = Pengaduan.objects.all().order_by('-tanggal_lapor')
     serializer_class = PengaduanSerializer
-    # Hanya Admin/Staff yang bisa mengakses (Pertemuan 9)
+    # Hanya Admin/Staff yang bisa mengakses 
     permission_classes = [IsAdminUser]
+
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['judul', 'deskripsi', 'status']
+    ordering_fields = ['tanggal_lapor', 'status']
